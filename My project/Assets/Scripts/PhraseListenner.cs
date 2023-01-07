@@ -15,10 +15,7 @@ public class PhraseListenner : MonoBehaviour
     private DictationRecognizer m_DictationRecognizer;
     
     public Text ReturnText;
-    
-    // [SerializeField] ScrollViews _scrollViews;
-    // [SerializeField] private GameSystem _gameSystem;
-    
+
     void InitDictationRecognizer()
     {
         m_DictationRecognizer = new DictationRecognizer();
@@ -46,10 +43,6 @@ public class PhraseListenner : MonoBehaviour
     void OnFinishSpeechToTextButton(string text, ConfidenceLevel confidences)
     {
         Debug.LogFormat("Dictation result: {0}", text);
-        SemanticMeaning temp = new SemanticMeaning();
-        Debug.Log(temp.key);
-        // _scrollViews.AddText(text);
-        // _gameSystem.AddWordList(text);
         ReturnText.text = text;
         m_DictationRecognizer.Stop();
         m_DictationRecognizer.Dispose();
