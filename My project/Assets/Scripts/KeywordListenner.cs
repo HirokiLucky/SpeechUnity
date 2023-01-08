@@ -18,6 +18,8 @@ public class KeywordListenner : MonoBehaviour
     private string loadText;
     [SerializeField] private Text text;
     [SerializeField] private Data _data;
+    [SerializeField] private WordSelect word;
+    [SerializeField] private SelectButton _select;
 
     private void Start()
     {
@@ -28,6 +30,9 @@ public class KeywordListenner : MonoBehaviour
 
     public void OnClick()
     {
+        Debug.Log("認識開始");
+        m_Keywords = _data.sound50Index[word.dropdown5.options[word.dropdown5.value].text][_select.selectNum - 2];
+        m_Recognizer = new KeywordRecognizer(m_Keywords); 
         m_Recognizer.OnPhraseRecognized += OnPhraseRecognized;
         m_Recognizer.Start();
     }

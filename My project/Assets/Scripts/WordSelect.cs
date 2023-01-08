@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class WordSelect : MonoBehaviour
 {
     [SerializeField] Dropdown dropDownHead;
-    [SerializeField] private Dropdown dropdown5;
+    public Dropdown dropdown5;
     [SerializeField] private Data _data;
 
     public void OnChanged()

@@ -5,10 +5,8 @@ using UnityEngine.UI;
 
 public class SelectButton : MonoBehaviour
 {
-    [SerializeField] private Button up;
-    [SerializeField] private Button down;
     [SerializeField] private Text text;
-    private int selectNum = 2;
+    public int selectNum = 2;
     
     public void OnClickUP()
     {
