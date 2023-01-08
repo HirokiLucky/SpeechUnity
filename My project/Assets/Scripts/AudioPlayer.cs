@@ -4,11 +4,19 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class AudioPlayer : MonoBehaviour
 {
-    private void Start()
+    [SerializeField] private InputField _inputField;
+    
+    public void PlaySpeech()
     {
-        // OpenJTalk.Speak("こんにちは、良い天気ですね");
+        OpenJTalk.Speak("永井宏樹");
+    }
+
+    public void OnClickAudio()
+    {
+        OpenJTalk.Speak(_inputField.text);
     }
 }
