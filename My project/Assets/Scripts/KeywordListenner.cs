@@ -10,6 +10,7 @@ using UnityEngine.Windows.Speech;
 public class KeywordListenner : MonoBehaviour
 {
     [SerializeField] private string[] m_Keywords;
+    [SerializeField] private Button speechButton;
 
 
     private KeywordRecognizer m_Recognizer;
@@ -35,6 +36,7 @@ public class KeywordListenner : MonoBehaviour
         m_Recognizer = new KeywordRecognizer(m_Keywords); 
         m_Recognizer.OnPhraseRecognized += OnPhraseRecognized;
         m_Recognizer.Start();
+        speechButton.interactable = false;
     }
 
     private void OnPhraseRecognized(PhraseRecognizedEventArgs args)
@@ -46,4 +48,12 @@ public class KeywordListenner : MonoBehaviour
         builder.AppendFormat("\tDuration: {0} seconds{1}", args.phraseDuration.TotalSeconds, Environment.NewLine);
         Debug.Log(builder.ToString());
     }
+    
+    public void OnClickStop()
+    {
+        m_Recognizer.Stop();
+        m_Recognizer.Dispose();
+        speechButton.interactable = true;
+        Debug.Log("音声認識を停止しました。");
+    } 
 }

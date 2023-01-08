@@ -16,22 +16,15 @@ public class PhraseListenner : MonoBehaviour
     
     public Text ReturnText;
 
+    private void Start()
+    {
+        m_DictationRecognizer = new DictationRecognizer();
+    }
+
     void InitDictationRecognizer()
     {
         m_DictationRecognizer = new DictationRecognizer();
-    
         m_DictationRecognizer.DictationResult += OnFinishSpeechToTextButton;
-    
-        m_DictationRecognizer.DictationComplete += (completionCause) =>
-        {
-            if (completionCause != DictationCompletionCause.Complete)
-                Debug.LogErrorFormat("Dictation completed unsuccessfully: {0}.", completionCause);
-        };
-    
-        m_DictationRecognizer.DictationError += (error, hresult) =>
-        {
-            Debug.LogErrorFormat("Dictation error: {0}; HResult = {1}.", error, hresult);
-        };
     }
     public void OnClickSpeechToTextButton()
     {
@@ -44,6 +37,14 @@ public class PhraseListenner : MonoBehaviour
     {
         Debug.LogFormat("Dictation result: {0}", text);
         ReturnText.text = text;
+        m_DictationRecognizer.Stop();
+        m_DictationRecognizer.Dispose();
+        m_speechToTextButton.interactable = true;
+    }
+
+    public void OnClickStop()
+    {
+        Debug.Log("stop");
         m_DictationRecognizer.Stop();
         m_DictationRecognizer.Dispose();
         m_speechToTextButton.interactable = true;
