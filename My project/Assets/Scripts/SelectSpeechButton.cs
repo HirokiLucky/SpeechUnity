@@ -1,32 +1,60 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SelectSpeechButton : MonoBehaviour
 {
     [SerializeField] private GameObject phraseButton;
     [SerializeField] private GameObject keywordButton;
+    [SerializeField] private GameObject audioButton;
+    [SerializeField] private GameObject phrase;
+    [SerializeField] private GameObject keyword;
+    [SerializeField] private GameObject audio;
 
-    [SerializeField] private PhraseListenner _phraseListenner;
-    [SerializeField] private KeywordListenner _keywordListenner;
+    [SerializeField] private GameObject backButton;
+    
 
     public void OnClickPhrase()
     {
-        StopRunning();
-        keywordButton.SetActive(false);
-        phraseButton.SetActive(true);
+        ButtonFalse();
+        phrase.SetActive(true);
+        backButton.SetActive(true);
     }
     
     public void OnClickKeyword()
     {
-        StopRunning();
-        phraseButton.SetActive(false);
-        keywordButton.SetActive(true);
+        ButtonFalse();
+        keyword.SetActive(true);
+    }
+    
+    public void OnClickAudio()
+    {
+        ButtonFalse();
+        audio.SetActive(true);
+        backButton.SetActive(true);
     }
 
-    void StopRunning()
+    public void ButtonFalse()
     {
-        _phraseListenner.OnClickStop();
-        _keywordListenner.OnClickStop();
+        keywordButton.SetActive(false);
+        audioButton.SetActive(false);
+        phraseButton.SetActive(false);
     }
+
+    public void LoadScene()
+    {
+        SceneManager.LoadScene (SceneManager.GetActiveScene().name);
+    }
+    
+    public void FinishGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;//ゲームプレイ終了
+#else
+    Application.Quit();//ゲームプレイ終了
+#endif
+    }
+    
+    
 }

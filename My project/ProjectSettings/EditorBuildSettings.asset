@@ -4,5 +4,14 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/SampleScene.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 0
+    path: Assets/OpenJTalkForUnity/_Scene/Native.unity
+    guid: 3845abe5e1c4bc04fb83e5265ec1aec2
+  - enabled: 0
+    path: Assets/OpenJTalkForUnity/_Scene/Speak.unity
+    guid: b16e19f8e856f7140a8f32a6383cf251
   m_configObjects: {}

@@ -13,7 +13,7 @@ public class KeywordListenner : MonoBehaviour
     [SerializeField] private Button speechButton;
 
 
-    private KeywordRecognizer m_Recognizer;
+    public KeywordRecognizer m_Recognizer;
     
     [SerializeField] private TextAsset textAsset;
     private string loadText;
@@ -41,12 +41,17 @@ public class KeywordListenner : MonoBehaviour
 
     private void OnPhraseRecognized(PhraseRecognizedEventArgs args)
     {
+        m_Recognizer.Stop();
+        m_Recognizer.Dispose();
+        OpenJTalk.Speak(args.text);
         StringBuilder builder = new StringBuilder();
         text.text = args.text;
+        speechButton.interactable = true;
         builder.AppendFormat("{0} ({1}){2}", args.text, args.confidence, Environment.NewLine);
         builder.AppendFormat("\tTimestamp: {0}{1}", args.phraseStartTime, Environment.NewLine);
         builder.AppendFormat("\tDuration: {0} seconds{1}", args.phraseDuration.TotalSeconds, Environment.NewLine);
         Debug.Log(builder.ToString());
+        
     }
     
     public void OnClickStop()

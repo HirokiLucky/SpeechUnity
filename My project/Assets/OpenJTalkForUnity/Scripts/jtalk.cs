@@ -70,7 +70,7 @@ namespace JTalkDll
         /// <summary>
         /// <para>コンストラクタ</para>
         /// </summary>
-        public JTalkTTS(String voicePath = "", String dicPath = "", String voiceDirPath = "")
+        public JTalkTTS(String voicePath = "mei_happy", String dicPath = "StreamingAssets/OpenJTalkForUnity/dll/dic_utf_8", String voiceDirPath = "StreamingAssets/OpenJTalkForUnity/dll/voice")
         {
             handle = openjtalk_initialize(voicePath, dicPath, voiceDirPath);
             check_openjtalk_object();

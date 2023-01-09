@@ -25,6 +25,17 @@ public class PhraseListenner : MonoBehaviour
     {
         m_DictationRecognizer = new DictationRecognizer();
         m_DictationRecognizer.DictationResult += OnFinishSpeechToTextButton;
+        
+        m_DictationRecognizer.DictationComplete += (completionCause) =>
+        {
+            if (completionCause != DictationCompletionCause.Complete)
+                Debug.Log("complete");
+        };
+        
+        m_DictationRecognizer.DictationError += (error, hresult) =>
+        {
+            Debug.Log("error");
+        };
     }
     public void OnClickSpeechToTextButton()
     {
@@ -39,6 +50,7 @@ public class PhraseListenner : MonoBehaviour
         ReturnText.text = text;
         m_DictationRecognizer.Stop();
         m_DictationRecognizer.Dispose();
+        OpenJTalk.Speak(text);
         m_speechToTextButton.interactable = true;
     }
 
