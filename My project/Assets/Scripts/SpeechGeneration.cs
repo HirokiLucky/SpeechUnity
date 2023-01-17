@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -20,9 +21,15 @@ public class SpeechGeneration : MonoBehaviour
     public AudioClip source;
 
     [SerializeField] private InputField input;
+    
+    [SerializeField] private LineRenderer lineRenderer;
+    private float[] data = default;
+    private int sampleStep = default;
+    private Vector3[] samplingLinePoints = default;
 
     private void Start()
     {
+        NativeLeakDetection.Mode = NativeLeakDetectionMode.EnabledWithStackTrace;
         _audioSource = GetComponent<AudioSource>();
     }
 
@@ -30,7 +37,10 @@ public class SpeechGeneration : MonoBehaviour
     {
         TextToAudio("Rika", input.text, "good", 0, "kGOdv5yl.oqUd2gMibwhBVp5C6ed57Wpxvs2LUKOW");
         _audioSource.Play();
+        var data = new float[source.channels * source.samples];
+        _audioSource.clip.GetData(data, 0);
     }
+    
 
     public class Synthese
     {
