@@ -8,9 +8,11 @@ public class SelectSpeechButton : MonoBehaviour
     [SerializeField] private GameObject phraseButton;
     [SerializeField] private GameObject keywordButton;
     [SerializeField] private GameObject audioButton;
+    [SerializeField] private GameObject SpeechButton;
     [SerializeField] private GameObject phrase;
     [SerializeField] private GameObject keyword;
     [SerializeField] private GameObject audio;
+    [SerializeField] private GameObject Speech;
 
     [SerializeField] private GameObject backButton;
     
@@ -35,11 +37,19 @@ public class SelectSpeechButton : MonoBehaviour
         backButton.SetActive(true);
     }
 
+    public void OnClickSpeech()
+    {
+        ButtonFalse();
+        Speech.SetActive(true);
+        backButton.SetActive(true);
+    }
+
     public void ButtonFalse()
     {
         keywordButton.SetActive(false);
         audioButton.SetActive(false);
         phraseButton.SetActive(false);
+        SpeechButton.SetActive(false);
     }
 
     public void LoadScene()

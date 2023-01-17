@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
-public class SoundT3est : MonoBehaviour
+public class SpeechGeneration : MonoBehaviour
 {
     public string url;
     UnityWebRequest www;
@@ -15,9 +16,20 @@ public class SoundT3est : MonoBehaviour
 
     int selectedOctave = 0;
 
+    private AudioSource _audioSource;
+    public AudioClip source;
+
+    [SerializeField] private InputField input;
+
     private void Start()
     {
-        TextToAudio("Rika", "永井宏樹", "good", 0, "kGOdv5yl.oqUd2gMibwhBVp5C6ed57Wpxvs2LUKOW");
+        _audioSource = GetComponent<AudioSource>();
+    }
+
+    public void OnClickSpeechStart()
+    {
+        TextToAudio("Rika", input.text, "good", 0, "kGOdv5yl.oqUd2gMibwhBVp5C6ed57Wpxvs2LUKOW");
+        _audioSource.Play();
     }
 
     public class Synthese
@@ -26,7 +38,7 @@ public class SoundT3est : MonoBehaviour
         public string audio;
     }
 
-    public AudioClip a;
+    
     
     public void TextToAudio(string option, string phrase, string title, double octave, string apikey)
     {
@@ -88,7 +100,8 @@ public class SoundT3est : MonoBehaviour
             }
             else
             {
-                a = DownloadHandlerAudioClip.GetContent(www_audio);
+                source = DownloadHandlerAudioClip.GetContent(www_audio);
+                _audioSource.clip = source;
                 UnityEngine.Debug.Log("Audio Generation In Progress.");
             }
         }
