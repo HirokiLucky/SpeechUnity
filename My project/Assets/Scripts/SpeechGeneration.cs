@@ -5,6 +5,7 @@ using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using Vector3 = UnityEngine.Vector3;
 
 public class SpeechGeneration : MonoBehaviour
 {
@@ -18,14 +19,13 @@ public class SpeechGeneration : MonoBehaviour
     int selectedOctave = 0;
 
     private AudioSource _audioSource;
-    public AudioClip source;
+    public AudioClip clip;
 
     [SerializeField] private InputField input;
-    
-    [SerializeField] private LineRenderer lineRenderer;
-    private float[] data = default;
-    private int sampleStep = default;
-    private Vector3[] samplingLinePoints = default;
+    public float[] data;
+    public Vector3[] vec;
+
+    [SerializeField] LineRenderer _renderer;
 
     private void Start()
     {
@@ -37,10 +37,26 @@ public class SpeechGeneration : MonoBehaviour
     {
         TextToAudio("Rika", input.text, "good", 0, "kGOdv5yl.oqUd2gMibwhBVp5C6ed57Wpxvs2LUKOW");
         _audioSource.Play();
-        var data = new float[source.channels * source.samples];
-        _audioSource.clip.GetData(data, 0);
+        data = new float[clip.channels * clip.samples];
+        vec = new Vector3[clip.channels * clip.samples];
+        _renderer.positionCount = clip.channels * clip.samples;
+        clip.GetData(data, 0);
+        
+        float num =  (float)40 / (float)(clip.channels * clip.samples);
+        float datay = 0;
+
+        for (int i = 0; i < data.Length; i++)
+        {
+            vec[i].x =  i * (float)num - 20;
+            vec[i].y = data[i] + 5;
+            datay += data[i];
+            vec[i].z = 10;
+        }
+        
+        _renderer.SetPositions(vec);
+        
     }
-    
+
 
     public class Synthese
     {
@@ -110,8 +126,8 @@ public class SpeechGeneration : MonoBehaviour
             }
             else
             {
-                source = DownloadHandlerAudioClip.GetContent(www_audio);
-                _audioSource.clip = source;
+                clip = DownloadHandlerAudioClip.GetContent(www_audio);
+                _audioSource.clip = clip;
                 UnityEngine.Debug.Log("Audio Generation In Progress.");
             }
         }
